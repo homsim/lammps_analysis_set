@@ -22,16 +22,13 @@ class Temperatures(Simulation):
     #conv = (1e-3/N_A)*((1e-10)**2/(1e-15)**2)  # (g*Angstrom^2)/(mole*fs^2) to J 
                                                 
     def __init__(self, 
-                 log_file = '',
                  traj_file = '',
                  bond_file = '',
                  plot = False,
                  dt = 0.25,
                  types = []):
 
-        super().__init__(log_file = '', traj_file = '', bond_file = '', 
-                        plot = False)
-        self.log_file = log_file
+        super().__init__(traj_file = '', bond_file = '', plot = False)
         self.traj_file = traj_file
         self.bond_file = bond_file
         self.plot = plot
@@ -104,6 +101,9 @@ class Temperatures(Simulation):
         return 0
 
     def iterate_frames(self):
+        """
+        Iterate over all frames in the traj_files
+        """
         try:
             if not self.traj_file:
                 raise FileNotFoundError('No traj_file provided for temperature calculation...')
