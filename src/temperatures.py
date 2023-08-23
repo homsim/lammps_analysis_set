@@ -145,7 +145,7 @@ class Temperatures(Simulation):
                                'T_vib': T_vib_arr,
                                'T_rot': T_rot_arr})
         df_out.to_csv('Mode_temp_gas.dat', sep = '\t',
-                     float_format = '%.2f', index = False)
+                      float_format = '%.2f', index = False)
 
         if plot:
             fig, ax = plt.subplots(1, 1, figsize = (6.4, 4.8))
