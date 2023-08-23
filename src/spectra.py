@@ -11,13 +11,11 @@ class Spectra(Simulation):
     def __init__(self, 
                  vacf_file = '', 
                  dipole_file = '',
-                 plot = False,
                  dt = 0.25):
 
-        super().__init__(vacf_file = '', dipole_file = '', plot = False)
+        super().__init__(vacf_file = '', dipole_file = '')
         self.vacf_file = vacf_file
         self.dipole_file = dipole_file
-        self.plot = plot
         self.dt = dt
 
 
@@ -78,7 +76,7 @@ class Spectra(Simulation):
         return v, fft_acf
 
 
-    def velocity(self):
+    def velocity(self, plot = False):
         """
         Computes the mode spectrum from the velocity autocorrelation function.
         Units in the 'vacf_file' are expected to be in LAMMPS real units
@@ -131,7 +129,7 @@ class Spectra(Simulation):
             plt.savefig(f'{suffix}.png', bbox_inches='tight', dpi=600)
 
 
-    def dipole(self):
+    def dipole(self, plot = False, T = 300):
         """
         Computes the mode spectrum from the change in dipole moment. This
         is then effectively the IR spectrum. For intensity rescaling the
@@ -161,7 +159,7 @@ class Spectra(Simulation):
         v, fft_dacf = self.get_mode_spectrum(t, dacf)
         
         ### rescale the lineshape (see HA method for details)
-        Q = np.array(self.HA(v, 300))
+        Q = np.array(self.HA(v, T))
         ir = np.multiply(fft_dacf, Q)
 
         ### filtering

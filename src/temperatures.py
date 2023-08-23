@@ -24,14 +24,12 @@ class Temperatures(Simulation):
     def __init__(self, 
                  traj_file = '',
                  bond_file = '',
-                 plot = False,
                  dt = 0.25,
                  types = []):
 
-        super().__init__(traj_file = '', bond_file = '', plot = False)
+        super().__init__(traj_file = '', bond_file = '')
         self.traj_file = traj_file
         self.bond_file = bond_file
-        self.plot = plot
         self.dt = dt
         self.types = types
 
@@ -88,7 +86,7 @@ class Temperatures(Simulation):
 
         return 0
 
-    def create_bond_properties(self, data):
+    def create_bond_props(self, data):
         """
         Create the bond properties needed for the mode temperatures.
         """
@@ -100,7 +98,7 @@ class Temperatures(Simulation):
 
         return 0
 
-    def iterate_frames(self):
+    def iterate_frames(self, plot = False):
         """
         Iterate over all frames in the traj_files
         """
@@ -112,9 +110,14 @@ class Temperatures(Simulation):
 
         pipeline = import_file(self.traj_file)
 
+        t_arr = []
+        T_com_arr = []
+        T_vib_arr = []
+        T_rot_arr = []
         for frame in range(pipeline.source.num_frames):
             data = pipeline.source.compute(frame)
-            print(f"{data.attributes['Timestep']*self.dt/1000} ps")
+            
+            t_arr.append(data.attributes['Timestep']*self.dt/1000)
 
             ### create particle properties for the velocities
             self.create_particle_props(data)
@@ -125,16 +128,36 @@ class Temperatures(Simulation):
             
             # filter zeros, i.e. from non-gas phase particles/bonds
             #self.v_com = [v for v in data.particles['v_com'] if any(v)]
-            #self.v_vib = [v for v in data.particles['v_vib'] if any(v)]
+            #sel\f.v_vib = [v for v in data.particles['v_vib'] if any(v)]
             #self.v_rot = [v for v in data.particles['v_rot'] if any(v)]
             T_com = np.mean([T for T in data.particles.bonds['T_com'] if T])
             T_vib = np.mean([T for T in data.particles.bonds['T_vib'] if T])
             T_rot = np.mean([T for T in data.particles.bonds['T_rot'] if T])
 
-            print(f'T_com: {T_com:.2f} K')
-            print(f'T_vib: {T_vib:.2f} K')
-            print(f'T_rot: {T_rot:.2f} K')
-        
+            T_com_arr.append(T_com)
+            T_vib_arr.append(T_vib)
+            T_rot_arr.append(T_rot)
+
+        df_out = pd.DataFrame({'t [ps]': t_arr,
+                               'T_com': T_com_arr,
+                               'T_vib': T_vib_arr,
+                               'T_rot': T_rot_arr})
+        df_out.to_csv('Mode_temp_gas.dat', sep = '\t',
+                     float_format = '%.2f', index = False)
+
+        if plot:
+            fig, ax = plt.subplots(1, 1, figsize = (6.4, 4.8))
+            ax.plot(t_arr, T_com_arr, label = '$T_{COM}$')
+            ax.plot(t_arr, T_vib_arr, label = '$T_{vib}$')
+            ax.plot(t_arr, T_rot_arr, label = '$T_{rot}$')
+
+            ax.set_xlabel('Time $t$ [ps]')
+            ax.set_ylabel('Mode temp. $T$ [K]')
+
+            ax.legend(loc = 'best')
+            plt.tight_layout()
+            plt.savefig('Mode_temp_gas.png', dpi = 600, bbox_inches = 'tight')
+
         return 0
 
     def get_mode_temperatures(self, frame, data, modifiers):
@@ -151,7 +174,7 @@ class Temperatures(Simulation):
             data.apply(modifier)
 
         ### create bond property for the temperatures
-        self.create_bond_properties(data)
+        self.create_bond_props(data)
 
         sel = data.particles['Selection']
 
