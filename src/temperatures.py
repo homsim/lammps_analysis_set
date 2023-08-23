@@ -94,15 +94,16 @@ class Temperatures(Simulation):
         """
         N_bond = data.particles.bonds.count
         null_data = np.zeros(N_bond)
-        data.particles_.bonds.create_property('T_com', data = null_data)
-        data.particles_.bonds.create_property('T_vib', data = null_data)
-        data.particles_.bonds.create_property('T_rot', data = null_data)
+        data.particles_.bonds_.create_property('T_com', data = null_data)
+        data.particles_.bonds_.create_property('T_vib', data = null_data)
+        data.particles_.bonds_.create_property('T_rot', data = null_data)
 
         return 0
 
     def iterate_frames(self, plot = False):
         """
-        Iterate over all frames in the traj_files
+        Iterate over all frames in the traj_files and calculate mode
+        velocities and temperatures.
         """
         try:
             if not self.traj_file:
@@ -112,21 +113,26 @@ class Temperatures(Simulation):
 
         pipeline = import_file(self.traj_file)
 
+        data = pipeline.compute()
+
+        mods = self.get_modifiers(data)
+        for mod in mods:
+            pipeline.modifiers.append(mod)
+
         t_arr = []
         T_com_arr = []
         T_vib_arr = []
         T_rot_arr = []
         for frame in range(pipeline.source.num_frames):
-            data = pipeline.source.compute(frame)
+            data = pipeline.compute(frame)
             
             t_arr.append(data.attributes['Timestep']*self.dt/1000)
 
             ### create particle properties for the velocities
             self.create_particle_props(data)
 
-            modifiers = self.get_modifiers(data)
-            self.get_mode_velocities(frame, data, modifiers)
-            self.get_mode_temperatures(frame, data, modifiers)
+            self.get_mode_velocities(data)
+            self.get_mode_temperatures(data)
             
             # filter zeros, i.e. from non-gas phase particles/bonds
             #self.v_com = [v for v in data.particles['v_com'] if any(v)]
@@ -162,7 +168,7 @@ class Temperatures(Simulation):
 
         return 0
 
-    def get_mode_temperatures(self, frame, data, modifiers):
+    def get_mode_temperatures(self, data):
         ### get relevant properties
         v_coms = data.particles['v_com']
         v_vib = data.particles['v_vib']
@@ -170,10 +176,6 @@ class Temperatures(Simulation):
         R = data.particles['R']
         d = data.particles['d']
         ptypes = data.particles['Particle Type']
-
-        ### apply the modifiers
-        for modifier in modifiers:
-            data.apply(modifier)
 
         ### create bond property for the temperatures
         self.create_bond_props(data)
@@ -226,15 +228,11 @@ class Temperatures(Simulation):
         
         return 0
 
-    def get_mode_velocities(self, frame, data, modifiers):
+    def get_mode_velocities(self, data):
         ### get relevant properties
         positions = data.particles['Position']
         velocities = data.particles['Velocity']
         ptypes = data.particles['Particle Type']
-
-        ### apply the modifiers
-        for modifier in modifiers:
-            data.apply(modifier)
 
         sel = data.particles['Selection']
 
