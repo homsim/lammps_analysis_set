@@ -34,9 +34,9 @@ Calculate the mode spectrum from the velocity autocorrelation function provided 
 spec.velocity()
 ```
 
-### Spectra.velocity()
+### Spectra.dipole()
 
-Calculate the mode spectrum from the autocorrelation function of the change in dipole moment provided as `dipole_file`. 
+Calculate the mode spectrum from the autocorrelation function of the change in dipole moment provided as `dipole_file`. The method also applies the harmonic approximation ([https://doi.org/10.1063/1.1774986](https://doi.org/10.1063/1.1774986)) with a default temperature of 300 K (can be changed by `T` variable).
 
 ```python
 spec.dipole()
