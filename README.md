@@ -5,6 +5,7 @@ The repo is heavily dependent on the API of the Open Visualization Tool *Ovito* 
 ```bash
 conda env create -f ovito_env.yml
 ```
+So far no unit conversion tool is implemented. The expected units in all provided files follow the [*real* unit style of *LAMMPS*](https://docs.lammps.org/units.html#description). Above all, this means that positions are in units of Angstrom and velocites in Angstrom/femtosecond.
 
 # Methods and Usage
 
