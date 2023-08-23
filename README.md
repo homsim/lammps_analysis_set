@@ -1,7 +1,7 @@
 # About
 
 This repository is a set of functions to analyse molecular dynamics simulation data. It works best with files computed by *LAMMPS* (especially its log- and trajectory-files). 
-The repo is heavily dependent on the API of the Open Visualization Tool *Ovito* (*A. Stukowski, Modelling Simul. Mater. Sci. Eng. 18, 015012 (2010)*). The `ovito_env.yml` file provides the needed libraries to import in a conda virtual environment:
+The repo is heavily dependent on the API of the Open Visualization Tool *Ovito* (*A. Stukowski, Modelling Simul. Mater. Sci. Eng. 18, 015012 (2010)*). The `ovito_env.yml` file provides the needed libraries to import in a conda virtual environment (will later be replaced by some sort of dependency handler):
 ```bash
 conda env create -f ovito_env.yml
 ```
@@ -11,7 +11,7 @@ So far no unit conversion tool is implemented. The expected units in all provide
 
 ## Spectra
 
-A set of methods to calculate the mode spectrum by fourier transforming some given autocorrelation function.
+A set of methods to calculate the mode spectrum by Fourier transforming some given autocorrelation function (ACF).
 
 ```python
 from spectra import Spectra
@@ -22,7 +22,8 @@ spec = Spectra(vacf_file = 'vacf.out', dipole_file = 'dipole.out', dt = 0.25)
 The `*.out` files are expected to have the following format:
 
 ```
-"time [fs]"\t"ACF"
+# Some header
+[time in fs]\t[ACF in arb. units]
 ```
 
 
