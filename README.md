@@ -15,8 +15,7 @@ A set of methods to calculate the mode spectrum by fourier transforming some giv
 ```python
 from spectra import Spectra
 
-spec = Spectra(vacf_file = 'vacf.out', dipole_file = 'dipole.out',
-                plot = True, dt = 0.25)
+spec = Spectra(vacf_file = 'vacf.out', dipole_file = 'dipole.out', dt = 0.25)
 ```
 
 The `*.out` files are expected to have the following format:
@@ -50,6 +49,6 @@ A set of methods to calculate the mode temperatures of diatomic molecules. It ca
 from temperatures import Temperatures
 
 temps = Temperatures(traj_file = 'test.lammpstrj', bond_file = 'bonds.reaxff', 
-                    plot = True, dt = 0.25, types = [2, 2])
+                    dt = 0.25, types = [2, 2])
 ```
 
