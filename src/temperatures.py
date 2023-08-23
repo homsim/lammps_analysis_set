@@ -6,9 +6,11 @@ from ovito.modifiers import CreateBondsModifier, CoordinationAnalysisModifier
 from ovito.modifiers import ExpressionSelectionModifier
 import numpy as np
 from numpy.linalg import norm
-import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.signal import savgol_filter
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
 
 class Temperatures(Simulation):
     """
