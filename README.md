@@ -54,4 +54,49 @@ temps = Temperatures(traj_file = 'test.lammpstrj', bond_file = 'bonds.reaxff',
                     dt = 0.25, types = [2, 2])
 ```
 
-The temperatures are computed via the respective mode velocities. $$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
+The temperatures are computed via the respective mode velocities. 
+### center-of-mass
+```math
+\boldsymbol{v}_{com}  = \frac{m_A \boldsymbol{v}_A + m_B \boldsymbol{v}_B}{m_A + m_B}
+```
+```math
+E_{com} = \frac{1}{2} (m_A + m_B) v_{com}^2
+```
+```math
+T_{com} = \frac{2 E_{com}}{3 k_B}
+```
+### vibrational
+```math
+\boldsymbol{v}_{vib,A}  = ((\boldsymbol{v}_A - \boldsymbol{v}_{com}) \cdot \hat{\boldsymbol{d}}_{AB}) \cdot \hat{\boldsymbol{d}}_{AB} 
+```
+with 
+```math
+\hat{\boldsymbol{d}}_{AB} = \frac{\boldsymbol{p}_B - \boldsymbol{p}_A}{ \left| \left | \boldsymbol{p}_B - \boldsymbol{p}_A \right| \right|} 
+```
+```math
+E_{vib} = \frac{1}{2} (m_A v_{vib,A}^2 + m_B v_{vib,B}^2) 
+```
+```math
+T_{vib} = \frac{2 E_{vib}}{ k_B}
+```
+
+### rotational
+```math
+\boldsymbol{v}_{rot,A} = \boldsymbol{v}_A - \boldsymbol{v}_{com} - \boldsymbol{v}_{str,A} 
+```
+```math
+I = m_A R_A^2 + m_B R_B^2
+```
+```math
+\boldsymbol{\omega}_A = \frac{\boldsymbol{R}_A \times \boldsymbol{v}_{rot,A}}{R_A} 
+```
+with
+```math
+\boldsymbol{R}_A = \boldsymbol{p}_A - \boldsymbol{COM}
+```
+```math
+E_{rot} = \frac{1}{2} I \omega_A^2
+```
+```math
+T_{rot} = \frac{E_{rot}}{k_B}
+```
