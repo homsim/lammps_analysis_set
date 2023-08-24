@@ -54,3 +54,6 @@ temps = Temperatures(traj_file = 'test.lammpstrj', bond_file = 'bonds.reaxff',
                     dt = 0.25, types = [2, 2])
 ```
 
+# Test
+
+$a = b \sum_{i}$
