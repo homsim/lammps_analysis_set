@@ -54,12 +54,4 @@ temps = Temperatures(traj_file = 'test.lammpstrj', bond_file = 'bonds.reaxff',
                     dt = 0.25, types = [2, 2])
 ```
 
-The temperatures are computed via the respective mode velocities.
-$$
-\bm{v}_{com} = \frac{m_A \bm{v}_A + m_B \bm{v}_B}{m_A + m_B}
-\bm{v}_{vib} = \left( ( \bm{v}_A - \bm{v}_{com} ) \cdot \hat{\bm{d}}_{AB}  \right)  \cdot \hat{\bm{d}}_{AB} 
-$$
-with
-$$
-\hat{\bm{d}}_{AB} = \frac{\bm{p}_B - \bm{p}_A}{ \left| \left | \bm{p}_B - \bm{p}_A \right| \right|} 
-$$
+The temperatures are computed via the respective mode velocities. $$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
