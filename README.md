@@ -56,4 +56,10 @@ temps = Temperatures(traj_file = 'test.lammpstrj', bond_file = 'bonds.reaxff',
 
 # Test
 
-$a = b \sum_{i}$
+
+more test
+
+$$
+a = b \sum_{i}
+$$
+
