@@ -136,7 +136,7 @@ class Temperatures(Simulation):
             
             # filter zeros, i.e. from non-gas phase particles/bonds
             #self.v_com = [v for v in data.particles['v_com'] if any(v)]
-            #sel\f.v_vib = [v for v in data.particles['v_vib'] if any(v)]
+            #self.v_vib = [v for v in data.particles['v_vib'] if any(v)]
             #self.v_rot = [v for v in data.particles['v_rot'] if any(v)]
             T_com = np.mean([T for T in data.particles.bonds['T_com'] if T])
             T_vib = np.mean([T for T in data.particles.bonds['T_vib'] if T])

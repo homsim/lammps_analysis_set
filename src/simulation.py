@@ -28,8 +28,7 @@ class Simulation:
                  traj_file = '',
                  bond_file = '',
                  vacf_file = '', 
-                 dipole_file = '',
-                 plot = False):
+                 dipole_file = ''):
         
         """
         Constructor for class Simulation.
@@ -52,6 +51,5 @@ class Simulation:
         self.bond_file = find('.', bond_file)
         self.vacf_file = find('.', vacf_file)
         self.dipole_file = find('.', dipole_file)
-        self.plot = plot
 
 
