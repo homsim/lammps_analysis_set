@@ -190,7 +190,7 @@ class Temperatures(Simulation):
                 # analyse only the type combinations specified in 'types'
                 type_comb = sorted([ptypes[a], ptypes[b]])
                 if type_comb == sorted(self.types):
-                    # world's complicated way to get particle masses...
+                    # world's most complicated way to get particle masses...
                     m_a = data.particles.particle_types.types[ptypes[a] - 1].mass
                     m_b = data.particles.particle_types.types[ptypes[b] - 1].mass
 
@@ -249,7 +249,7 @@ class Temperatures(Simulation):
                     v_a = velocities[a]
                     v_b = velocities[b]
 
-                    # world's complicated way to get particle masses...
+                    # world's most complicated way to get particle masses...
                     m_a = data.particles.particle_types.types[ptypes[a] - 1].mass
                     m_b = data.particles.particle_types.types[ptypes[b] - 1].mass
 
