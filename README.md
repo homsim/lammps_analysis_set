@@ -1,7 +1,7 @@
 # About
 
 This repository is a set of functions to analyse molecular dynamics simulation data. It works best with files computed by *LAMMPS* (especially its log- and trajectory-files). 
-The repo is heavily dependent on the API of the Open Visualization Tool *Ovito* (*A. Stukowski, Modelling Simul. Mater. Sci. Eng. 18, 015012 (2010)*). The `ovito_env.yml` file provides the needed libraries to import in a conda virtual environment (to be replaced by a proper dependency handler):
+The repo is heavily dependent on the API of the Open Visualization Tool *Ovito* ([*A. Stukowski, Modelling Simul. Mater. Sci. Eng. 18, 015012 (2010)*](https://doi.org/10.1088/0965-0393/18/1/015012)). The `ovito_env.yml` file provides the needed libraries to import in a conda virtual environment (to be replaced by a proper dependency handler):
 ```bash
 conda env create -f ovito_env.yml
 ```
@@ -37,7 +37,7 @@ spec.velocity(plot = True)
 
 ### Spectra.dipole()
 
-Calculate the mode spectrum from the autocorrelation function of the change in dipole moment provided as `dipole_file`. The method also applies the harmonic approximation ([https://doi.org/10.1063/1.1774986](https://doi.org/10.1063/1.1774986)) with a default temperature of 300 K (can be changed by `T` variable).
+Calculate the mode spectrum from the autocorrelation function of the change in dipole moment provided as `dipole_file`. The method also applies the harmonic approximation ([*R. Ramı́rez, J. Chem. Phys.9, 121 (2004)*](https://doi.org/10.1063/1.1774986)) with a default temperature of 300 K (can be changed by `T` variable).
 
 ```python
 spec.dipole(plot = True)
