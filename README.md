@@ -1,7 +1,7 @@
 # About
 
 This repository is a set of functions to analyse molecular dynamics simulation data. It works best with files computed by *LAMMPS* (especially its log- and trajectory-files). 
-The repo is heavily dependent on the API of the Open Visualization Tool *Ovito* (*A. Stukowski, Modelling Simul. Mater. Sci. Eng. 18, 015012 (2010)*). The `ovito_env.yml` file provides the needed libraries to import in a conda virtual environment (to be replaced by some sort of dependency handler):
+The repo is heavily dependent on the API of the Open Visualization Tool *Ovito* (*A. Stukowski, Modelling Simul. Mater. Sci. Eng. 18, 015012 (2010)*). The `ovito_env.yml` file provides the needed libraries to import in a conda virtual environment (to be replaced by a proper dependency handler):
 ```bash
 conda env create -f ovito_env.yml
 ```
